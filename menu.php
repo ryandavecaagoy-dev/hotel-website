@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CHMSUOTEL - Experience luxury, comfort, and sophistication at its finest.">
+    <meta name="keywords" content="hotel, luxury, accommodation, travel, CHMSUOTEL">
+    <meta name="author" content="Red and Team XG">
     <title>CHMSUOTEL - Luxury Hotel</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -21,11 +26,15 @@
             --font-sans: 'Jost', sans-serif;
         }
 
-        /* Reset */
+        /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -40,6 +49,12 @@
             display: block;
         }
 
+        /* Accessibility Focus States */
+        a:focus, button:focus, input:focus, select:focus {
+            outline: 2px dashed var(--primary-green);
+            outline-offset: 3px;
+        }
+
         /* --- Navigation --- */
         header {
             display: flex;
@@ -47,6 +62,7 @@
             align-items: center;
             border-bottom: 1px solid #eaeaea;
             height: 80px;
+            position: relative;
         }
 
         .menu-btn {
@@ -59,6 +75,10 @@
             border-right: 1px solid #eaeaea;
             cursor: pointer;
             transition: opacity 0.3s ease;
+            background: none;
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
         }
 
         .menu-btn:hover {
@@ -70,6 +90,37 @@
             width: 25px;
             height: 2px;
             background-color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: none; /* Hidden by default, toggled via JS */
+            position: absolute;
+            top: 80px;
+            left: 0;
+            background: white;
+            width: 250px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-links.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 15px 30px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-bottom: 1px solid #eaeaea;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--bg-light);
+            color: var(--primary-green);
         }
 
         .header-right {
@@ -217,6 +268,8 @@
             margin-top: 20px;
             border-radius: 2px;
             transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-outline:hover {
@@ -318,6 +371,43 @@
             gap: 5px;
         }
 
+        /* --- Reservation Form Section --- */
+        .reservation {
+            padding: 80px 5%;
+        }
+
+        .reservation form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .reservation input, .reservation select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #0f1b29;
+            color: white;
+            text-align: center;
+            padding: 40px 5%;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .hero h1 { font-size: 6rem; }
@@ -334,132 +424,191 @@
             header { padding-left: 15px; }
             .phone { display: none; }
             .hero-subtitles { flex-direction: column; gap: 10px; }
+            .room-details { flex-direction: column; gap: 10px; }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="menu-btn">
+        <button class="menu-btn" aria-label="Toggle navigation">
             <span></span>
             <span></span>
             <span></span>
-        </div>
+        </button>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#rooms">Rooms</a>
+            <a href="#book">Book Now</a>
+        </nav>
         <div class="header-right">
             <span class="phone">+63 993 8818 909</span>
-            <a href="#" class="reservation-btn">
+            <a href="#book" class="reservation-btn">
                 &#128197; Reservation
             </a>
         </div>
     </header>
 
-    <section class="hero">
-        <h1>CHMSUOTEL</h1>
-        <div class="hero-subtitles">
-            <span>Welcome to a world where luxury meets serenity.</span>
-            <span>In CHMSUOTEL we care.</span>
-        </div>
-        <div class="hero-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Luxury Hotel Room">
-        </div>
-    </section>
-
-    <section class="about">
-        <div class="section-header">
-            <span class="dots">&#8226;&#8226;&#8226;&#8226;&#8226;</span>
-            <span>About Us</span>
-        </div>
-        
-        <h2>DISCOVER A SANCTUARY OF COMFORT AND SOPHISTICATION CRAFTED TO ELEVATE YOUR TRAVEL EXPERIENCE.</h2>
-        
-        <div class="about-grid">
-            <div class="about-text">
-                <p>Discover a sanctuary of refined comfort and timeless sophistication, thoughtfully designed to elevate every moment of your travel experience.</p>
+    <main>
+        <section id="home" class="hero">
+            <h1>CHMSUOTEL</h1>
+            <div class="hero-subtitles">
+                <span>Welcome to a world where luxury meets serenity.</span>
+                <span>In CHMSUOTEL we care.</span>
             </div>
-            <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel Lobby">
+            <div class="hero-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Luxury Hotel Room" loading="lazy">
             </div>
-            <div class="about-text">
-                <p>Welcome to our hotel, a place where comfort, elegance, and exceptional hospitality come together to create an unforgettable stay.</p>
-                <a href="#" class="btn-outline">&#8594; Discover Our Rooms</a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="rooms">
-        <div class="section-header">
-            <span class="dots">&#8226;&#8226;&#8226;&#8226;&#8226;</span>
-            <span>Luxury Rooms</span>
-        </div>
-
-        <h2>WHERE LUXURY MEETS UNFORGETTABLE MOMENTS</h2>
-
-        <div class="rooms-grid">
-            <div class="room-card">
-                <div class="room-image-container">
-                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Royal Ambassador Suite">
-                    <div class="price-tag">
-                        <span class="small">Per Night</span>
-                        <span class="amount">$99</span>
-                    </div>
-                </div>
-                <h3 class="room-title">Royal Ambassador Suite</h3>
-                <div class="room-details">
-                    <div class="detail-item">&#128101; 4 Guests</div>
-                    <div class="detail-item">&#128207; 40 ft. Room</div>
-                    <div class="detail-item">&#128705; 40 ft. Bathroom</div>
-                </div>
-            </div>
-
-            <div class="room-card">
-                <div class="room-image-container">
-                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ambassador Luxury Suite">
-                    <div class="price-tag">
-                        <span class="small">Per Night</span>
-                        <span class="amount">$49</span>
-                    </div>
-                </div>
-                <h3 class="room-title">Ambassador Luxury Suite</h3>
-                <div class="room-details">
-                    <div class="detail-item">&#128101; 4 Guests</div>
-                    <div class="detail-item">&#128207; 30 ft. Room</div>
-                    <div class="detail-item">&#128705; 30 ft. Bathroom</div>
-                </div>
+        <section id="about" class="about">
+            <div class="section-header">
+                <span class="dots">&#8226;&#8226;&#8226;&#8226;&#8226;</span>
+                <span>About Us</span>
             </div>
             
-            <div class="room-card">
-                <div class="room-image-container">
-                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Standard Suite">
-                    <div class="price-tag">
-                        <span class="small">Per Night</span>
-                        <span class="amount">$89</span>
-                    </div>
+            <h2>DISCOVER A SANCTUARY OF COMFORT AND SOPHISTICATION CRAFTED TO ELEVATE YOUR TRAVEL EXPERIENCE.</h2>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Discover a sanctuary of refined comfort and timeless sophistication, thoughtfully designed to elevate every moment of your travel experience.</p>
                 </div>
-                <h3 class="room-title">Standard Suite</h3>
-                <div class="room-details">
-                    <div class="detail-item">&#128101; 2 Guests</div>
-                    <div class="detail-item">&#128207; 25 ft. Room</div>
-                    <div class="detail-item">&#128705; 20 ft. Bathroom</div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel Lobby" loading="lazy">
                 </div>
+                <div class="about-text">
+                    <p>Welcome to our hotel, a place where comfort, elegance, and exceptional hospitality come together to create an unforgettable stay.</p>
+                    <a href="#rooms" class="btn-outline">&#8594; Discover Our Rooms</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="rooms" class="rooms">
+            <div class="section-header">
+                <span class="dots">&#8226;&#8226;&#8226;&#8226;&#8226;</span>
+                <span>Luxury Rooms</span>
             </div>
 
-            <div class="room-card">
-                <div class="room-image-container">
-                    <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Majestic Heritage Suite">
-                    <div class="price-tag">
-                        <span class="small">Per Night</span>
-                        <span class="amount">$79</span>
+            <h2>WHERE LUXURY MEETS UNFORGETTABLE MOMENTS</h2>
+
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-image-container">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Royal Ambassador Suite" loading="lazy">
+                        <div class="price-tag">
+                            <span class="small">Per Night</span>
+                            <span class="amount">$99</span>
+                        </div>
+                    </div>
+                    <h3 class="room-title">Royal Ambassador Suite</h3>
+                    <div class="room-details">
+                        <div class="detail-item">&#128101; 4 Guests</div>
+                        <div class="detail-item">&#128207; 40 ft. Room</div>
+                        <div class="detail-item">&#128705; 40 ft. Bathroom</div>
                     </div>
                 </div>
-                <h3 class="room-title">Majestic Heritage Suite</h3>
-                <div class="room-details">
-                    <div class="detail-item">&#128101; 3 Guests</div>
-                    <div class="detail-item">&#128207; 35 ft. Room</div>
-                    <div class="detail-item">&#128705; 25 ft. Bathroom</div>
+
+                <div class="room-card">
+                    <div class="room-image-container">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ambassador Luxury Suite" loading="lazy">
+                        <div class="price-tag">
+                            <span class="small">Per Night</span>
+                            <span class="amount">$49</span>
+                        </div>
+                    </div>
+                    <h3 class="room-title">Ambassador Luxury Suite</h3>
+                    <div class="room-details">
+                        <div class="detail-item">&#128101; 4 Guests</div>
+                        <div class="detail-item">&#128207; 30 ft. Room</div>
+                        <div class="detail-item">&#128705; 30 ft. Bathroom</div>
+                    </div>
+                </div>
+                
+                <div class="room-card">
+                    <div class="room-image-container">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Standard Suite" loading="lazy">
+                        <div class="price-tag">
+                            <span class="small">Per Night</span>
+                            <span class="amount">$89</span>
+                        </div>
+                    </div>
+                    <h3 class="room-title">Standard Suite</h3>
+                    <div class="room-details">
+                        <div class="detail-item">&#128101; 2 Guests</div>
+                        <div class="detail-item">&#128207; 25 ft. Room</div>
+                        <div class="detail-item">&#128705; 20 ft. Bathroom</div>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-image-container">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Majestic Heritage Suite" loading="lazy">
+                        <div class="price-tag">
+                            <span class="small">Per Night</span>
+                            <span class="amount">$79</span>
+                        </div>
+                    </div>
+                    <h3 class="room-title">Majestic Heritage Suite</h3>
+                    <div class="room-details">
+                        <div class="detail-item">&#128101; 3 Guests</div>
+                        <div class="detail-item">&#128207; 35 ft. Room</div>
+                        <div class="detail-item">&#128705; 25 ft. Bathroom</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section id="book" class="reservation">
+            <div class="section-header">
+                <span class="dots">&#8226;&#8226;&#8226;&#8226;&#8226;</span>
+                <span>Book a Room</span>
+            </div>
+            <form action="#" method="POST">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="date" required>
+                <select required>
+                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="royal">Royal Ambassador Suite</option>
+                    <option value="ambassador">Ambassador Luxury Suite</option>
+                    <option value="standard">Standard Suite</option>
+                    <option value="majestic">Majestic Heritage Suite</option>
+                </select>
+                <button type="submit" class="btn-outline" style="justify-content: center;">Submit Request</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 10px;">CHMSUOTEL</h3>
+        <p>&copy; 2024 CHMSUOTEL. All rights reserved.</p>
+        <p style="margin-top: 5px;">Developed by Sikma Bois. • For Laboratory Purposes</p>
+    </footer>
+
+    <script>
+        // Simple JavaScript to toggle the mobile navigation menu
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav-links');
+
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
 </html>
