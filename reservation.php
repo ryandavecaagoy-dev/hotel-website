@@ -1,15 +1,41 @@
-
-
-
 <?php
-// PHP logic to handle form submission
+session_start();
+
+// Kick out anyone who isn't logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php?error=unauthorized");
+    exit();
+}
+
 $message = "";
+$json_file = 'rooms.json';
+
+// Handle the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $roomId = (int)$_POST['room_id'];
     $roomName = $_POST['room_name'];
     $checkIn = $_POST['checkin'];
-    
-    // In a real scenario, you would write code here to update your JSON or Database
-    $message = "Success! Your reservation for the $roomName on $checkIn has been confirmed.";
+
+    if (file_exists($json_file)) {
+        $jsonData = file_get_contents($json_file);
+        $data = json_decode($jsonData, true);
+
+        if (isset($data['rooms'])) {
+            foreach ($data['rooms'] as &$room) {
+                if ($room['id'] === $roomId) {
+                    if (!in_array($checkIn, $room['bookedDates'])) {
+                        $room['bookedDates'][] = $checkIn; 
+                    }
+                    break; 
+                }
+            }
+            if (file_put_contents($json_file, json_encode($data, JSON_PRETTY_PRINT))) {
+                $message = "Success! Your reservation for the $roomName on $checkIn has been confirmed and saved.";
+            } else {
+                $message = "Error: Could not save reservation to database.";
+            }
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -24,122 +50,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <style>
         :root {
-            --primary-green: #008a13;
-            --primary-green-hover: #006b0f;
+            --primary-green: #1a472a;
+            --primary-green-hover: #0f2e1b;
             --text-dark: #0f1b29;
             --bg-light: #f5f5f5;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Jost', sans-serif;
         }
 
-        body {
-            font-family: var(--font-sans);
-            margin: 0;
-            background-color: #fff;
-            color: var(--text-dark);
-        }
-
-        /* Reusing your Header Styles */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eaeaea;
-            height: 80px;
-            padding: 0 5%;
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .res-container {
-            max-width: 900px;
-            margin: 60px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .res-info h1 {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .booking-card {
-            background: var(--bg-light);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        .btn-confirm {
-            width: 100%;
-            background-color: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
+        body { font-family: var(--font-sans); margin: 0; background-color: #fff; color: var(--text-dark); }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; height: 80px; padding: 0 5%; }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; text-decoration: none; color: var(--text-dark); font-weight: 500; }
+        .res-container { max-width: 900px; margin: 60px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .res-info h1 { font-family: var(--font-serif); font-size: 3rem; line-height: 1.1; margin-bottom: 20px; }
+        .booking-card { background: var(--bg-light); padding: 40px; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 500; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: var(--font-sans); font-size: 1rem; box-sizing: border-box; }
+        .btn-confirm { width: 100%; background-color: var(--primary-green); color: white; border: none; padding: 15px; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 10px; }
         .btn-confirm:hover { background-color: var(--primary-green-hover); }
         .btn-confirm:disabled { background-color: #ccc; cursor: not-allowed; }
-
-        .status-msg {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .res-container { grid-template-columns: 1fr; }
-        }
+        .status-msg { background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 0.9rem; border: 1px solid #c3e6cb;}
+        @media (max-width: 768px) { .res-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html" class="logo">CHMSUOTEL</a>
+    <div style="display: flex; align-items: center; gap: 30px;">
+        <a href="menu.php" class="logo">CHMSUOTEL</a>
+        <a href="menu.php" style="text-decoration: none; color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">← Back to Home</a>
+    </div>
     <div class="phone">+63 993 8818 909</div>
 </header>
+
 
 <main class="res-container">
     <div class="res-info">
@@ -147,6 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>Select your desired dates to view live availability. Our suites are prepared with meticulous care for your arrival.</p>
         <div style="margin-top: 30px; font-style: italic; color: var(--primary-green);">
             "Experience luxury, comfort, and sophistication at its finest."
+        </div>
+        
+        <div id="dynamic-room-img-container" style="margin-top: 40px; border-radius: 10px; overflow: hidden; height: 250px; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+            <img id="dynamic-room-img" src="" alt="Selected Room" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
     </div>
 
@@ -189,6 +137,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     const roomSelect = document.getElementById('room_id');
     const roomNameInput = document.getElementById('room_name');
     const submitBtn = document.getElementById('submitBtn');
+    
+    // Elements for dynamic image
+    const imgContainer = document.getElementById('dynamic-room-img-container');
+    const imgElement = document.getElementById('dynamic-room-img');
+    
+    let allRooms = []; // Global variable to hold room data
 
     // Set min date to today
     checkinInput.min = new Date().toISOString().split("T")[0];
@@ -197,14 +151,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         const selectedDate = checkinInput.value;
         
         try {
-            // Fetch the JSON file (ensure rooms.json is in the same folder)
             const response = await fetch('rooms.json');
             const data = await response.json();
+            allRooms = data.rooms; // Save data globally
 
             roomSelect.innerHTML = '<option value="">-- Select a Room --</option>';
             roomSelect.disabled = false;
+            imgContainer.style.display = 'none'; // Hide image when date changes
+            submitBtn.disabled = true;
 
-            data.rooms.forEach(room => {
+            allRooms.forEach(room => {
                 const isBooked = room.bookedDates.includes(selectedDate);
                 const option = document.createElement('option');
                 option.value = room.id;
@@ -222,10 +178,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     });
 
-    // Update hidden room name field when selection changes
     roomSelect.addEventListener('change', () => {
-        roomNameInput.value = roomSelect.options[roomSelect.selectedIndex].text;
+        // Clean the room name string (removes the price text from being saved to JSON)
+        const fullText = roomSelect.options[roomSelect.selectedIndex].text;
+        roomNameInput.value = fullText.split(' ($')[0]; 
+        
         submitBtn.disabled = !roomSelect.value;
+
+        // DYNAMIC IMAGE LOGIC
+        const selectedRoomId = parseInt(roomSelect.value);
+        const selectedRoom = allRooms.find(r => r.id === selectedRoomId);
+        
+        if (selectedRoom && selectedRoom.image) {
+            imgElement.src = selectedRoom.image;
+            imgContainer.style.display = 'block';
+        } else {
+            imgContainer.style.display = 'none';
+        }
     });
 </script>
 

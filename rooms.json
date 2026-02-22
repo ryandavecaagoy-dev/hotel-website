@@ -1,8 +1,140 @@
 {
-  "rooms": [
-    { "id": 1, "name": "Royal Ambassador Suite", "total": 2, "bookedDates": ["2026-02-25", "2026-02-26"] },
-    { "id": 2, "name": "Ambassador Luxury Suite", "total": 5, "bookedDates": ["2026-02-22"] },
-    { "id": 3, "name": "Standard Suite", "total": 10, "bookedDates": [] },
-    { "id": 4, "name": "Majestic Heritage Suite", "total": 3, "bookedDates": ["2026-02-22", "2026-02-23"] }
-  ]
+    "rooms": [
+        {
+            "id": 1,
+            "name": "Royal Ambassador Suite",
+            "total": 2,
+            "price": 99,
+            "guests": 4,
+            "room_size": 40,
+            "bath_size": 40,
+            "image": "images/room1-bed.png",
+            "description": "Experience peak high-rise luxury. This expansive suite features a master bedroom with panoramic city skyline views, a sleek marble bathroom, and a modern private lounge with a marble kitchen bar.",
+            "gallery": [
+                "images/room1-bed.png",
+                "images/room1-bath.png",
+                "images/room1-kitchen.png"
+            ],
+            "bookedDates": ["2026-02-25", "2026-02-26", "2026-02-23"]
+        },
+        {
+            "id": 2,
+            "name": "Ambassador Luxury Suite",
+            "total": 5,
+            "price": 49,
+            "guests": 4,
+            "room_size": 30,
+            "bath_size": 30,
+            "image": "images/room2-bed.png",
+            "description": "Designed for the modern executive. Enjoy a plush king-sized bed, a glass-enclosed rain shower, and a minimalist lounge area overlooking the sparkling downtown district at night.",
+            "gallery": [
+                "images/room2-bed.png",
+                "images/room2-bath.png",
+                "images/room2-kitchen.png"
+            ],
+            "bookedDates": ["2026-02-22"]
+        },
+        {
+            "id": 3,
+            "name": "Standard Suite",
+            "total": 10,
+            "price": 89,
+            "guests": 2,
+            "room_size": 25,
+            "bath_size": 20,
+            "image": "images/room3-bed.png",
+            "description": "A sleek, contemporary retreat. The Standard Suite offers a serene sleeping area, smart-room lighting controls, and a functional workspace positioned right by the window.",
+            "gallery": [
+                "images/room3-bed.png",
+                "images/room3-bath.png",
+                "images/room3-kitchen.png"
+            ],
+            "bookedDates": []
+        },
+        {
+            "id": 4,
+            "name": "Majestic Heritage Suite",
+            "total": 3,
+            "price": 79,
+            "guests": 3,
+            "room_size": 35,
+            "bath_size": 25,
+            "image": "images/room4-bed.png",
+            "description": "A fusion of classic warmth and skyscraper modernity. This suite features dark walnut panels against massive glass windows, offering a sophisticated contrast to the city lights.",
+            "gallery": [
+                "images/room4-bed.png",
+                "images/room4-bath.png",
+                "images/room4-kitchen.png"
+            ],
+            "bookedDates": ["2026-02-22", "2026-02-23"]
+        },
+        {
+            "id": 5,
+            "name": "Presidential Penthouse",
+            "total": 1,
+            "price": 299,
+            "guests": 6,
+            "room_size": 80,
+            "bath_size": 50,
+            "image": "images/room5-bed.png",
+            "description": "The crown jewel of CHMSUOTEL. The Penthouse spans the highest floor, boasting uninterrupted 360-degree city views, a private high-altitude balcony, and a massive kitchen lounge.",
+            "gallery": [
+                "images/room5-bed.png",
+                "images/room5-bath.png",
+                "images/room5-kitchen.png"
+            ],
+            "bookedDates": []
+        },
+        {
+            "id": 6,
+            "name": "Ocean View Deluxe",
+            "total": 6,
+            "price": 149,
+            "guests": 4,
+            "room_size": 45,
+            "bath_size": 35,
+            "image": "images/room6-bed.png",
+            "description": "Situated on the coastal-facing side of the tower. This high-rise room features an unobstructed view of the bay meeting the city edge, complete with a glass-enclosed viewing shower.",
+            "gallery": [
+                "images/room6-bed.png",
+                "images/room6-bath.png",
+                "images/room6-kitchen.png"
+            ],
+            "bookedDates": []
+        },
+        {
+            "id": 7,
+            "name": "Executive Twin Room",
+            "total": 8,
+            "price": 95,
+            "guests": 2,
+            "room_size": 35,
+            "bath_size": 25,
+            "image": "images/room7-bed.png",
+            "description": "Ideal for business travelers. Featuring two ultra-comfortable twin beds, high-speed corporate Wi-Fi, and a sleek modern desk setup perfect for productivity.",
+            "gallery": [
+                "images/room7-bed.png",
+                "images/room7-bath.png",
+                "images/room7-kitchen.png"
+            ],
+            "bookedDates": ["2026-03-01"]
+        },
+        {
+            "id": 8,
+            "name": "Cozy Single Room",
+            "total": 4,
+            "price": 59,
+            "guests": 1,
+            "room_size": 20,
+            "bath_size": 15,
+            "image": "images/room8-bed.png",
+            "description": "A minimalist haven for the solo adventurer. Though compact, this room spares no luxury, offering automated blackout blinds and a brightly lit modern shower.",
+            "gallery": [
+                "images/room8-bed.png",
+                "images/room8-bath.png",
+                "images/room8-kitchen.png"
+            ],
+            "bookedDates": ["2026-02-22"]
+        }
+    ]
 }

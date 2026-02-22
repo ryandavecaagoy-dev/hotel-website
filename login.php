@@ -1,6 +1,9 @@
 
 
 <?php
+// 1. Start the session at the very top of the file
+session_start(); 
+
 $json_file = 'users.json';
 $message = "";
 
@@ -46,8 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $_POST['password'];
         $found = false;
 
+        // THIS LOOP is where $user gets defined!
         foreach ($users as $user) {
             if ($user['email'] === $email && password_verify($password, $user['password'])) {
+                $found = true;
+                
+                // Save the user's data into the session so the server remembers them
+                $_SESSION['user_id'] = $user['email']; 
+                $_SESSION['full_name'] = $user['full_name']; 
+                
+                // Redirect to reservation page
                 header("Location: reservation.php?login=success");
                 exit();
             }
@@ -69,8 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #008a13;
-            --primary-green-hover: #006b0f;
+            --primary-green: #1a472a;
+            --primary-green-hover: #0f2e1b;
             --text-dark: #0f1b29;
             --text-light: #555;
             --bg-light: #f5f5f5;
