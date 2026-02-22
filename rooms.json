@@ -1,0 +1,8 @@
+{
+  "rooms": [
+    { "id": 1, "name": "Royal Ambassador Suite", "total": 2, "bookedDates": ["2026-02-25", "2026-02-26"] },
+    { "id": 2, "name": "Ambassador Luxury Suite", "total": 5, "bookedDates": ["2026-02-22"] },
+    { "id": 3, "name": "Standard Suite", "total": 10, "bookedDates": [] },
+    { "id": 4, "name": "Majestic Heritage Suite", "total": 3, "bookedDates": ["2026-02-22", "2026-02-23"] }
+  ]
+}
