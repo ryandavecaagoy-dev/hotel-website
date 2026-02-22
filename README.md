@@ -55,4 +55,4 @@ Alignment Checks: If you add a new menu item, always include the <div class="tag
 Mobile First: Always test your changes in Chrome DevTools preset to ensure the layout remains responsive.
 
 📫 Contact
-For system bugs or clan-related inquiries, contact +63 993 8818 909.
+For system bugs inquiries, contact +63 993 8818 909.
